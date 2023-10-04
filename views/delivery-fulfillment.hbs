@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Fulfillment</title>
+</head>
+
+<body>
+    <header>
+        <h1>Delivery Fulfillment</h1>
+        <a href="/logout">Logout</a>
+    </header>
+
+    <main>
+        <section>
+            <h2>Delivery Fulfillment for Order #{{ order.id }}</h2>
+            <p>Customer: {{ order.customerName }}</p>
+            <p>Delivery Address: {{ order.deliveryAddress }}</p>
+            <p>Status: {{ order.status }}</p>
+
+            <form method="POST" action="/complete/{{ order.id }}">
+                <label for="photo">Take a photo as proof of delivery:</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required>
+
+                <button type="submit">Mark as Delivered</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Footer content goes here -->
+    </footer>
+</body>
+
+</html>

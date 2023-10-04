@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Deliveries</title>
+</head>
+
+<body>
+    <header>
+        <h1>Open Deliveries</h1>
+        <a href="/logout">Logout</a>
+    </header>
+
+    <main>
+        <section>
+            <h2>List of Open Deliveries</h2>
+            <ul>
+                {{#each orders}}
+                <li>
+                    <h3>Order #{{ this.id }}</h3>
+                    <p>Customer: {{ this.customerName }}</p>
+                    <p>Delivery Address: {{ this.deliveryAddress }}</p>
+                    <p>Status: {{ this.status }}</p>
+                    <form method="POST" action="/deliver/{{ this.id }}">
+                        <button type="submit">Start Delivery</button>
+                    </form>
+                </li>
+                {{/each}}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Footer content goes here -->
+    </footer>
+</body>
+
+</html>
