@@ -264,6 +264,7 @@ app.post("/login", async (req, res) => {
             req.session.user = {
                 name: driver.username,
                 fullName: driver.fullName,
+                licensePlate: driver.licensePlate
             }
             console.log(`setting user profile`)
 
@@ -401,12 +402,15 @@ app.get("/deliverylist", ensureLogin, async (req, res) => {
     console.log(`here at /deliverylist`)
     try {
         // Fetch orders assigned to the currently logged-in driver
-        const driverName = req.session.user.name;
-        const assignedOrders = await Order.find({ assignedTo: driverName }).lean().exec();
+        const driverName = req.session.user.fullName;
+        const licensePlate2 = req.session.user.licensePlate;
+        const assignedOrders = await Order.find({ assignedTo: licensePlate2 }).lean().exec();
 
         res.render("delivery-fulfillment", {
             layout: "main-layout",
             orders: assignedOrders,
+            driverName: driverName,
+            licensePlate2: licensePlate2
         });
     } catch (err) {
         console.error(err);
@@ -418,6 +422,7 @@ app.post("/deliver/:orderId", ensureLogin, async (req, res) => {
     console.log(`here at deliver/:orderId`)
     const orderId = req.params.orderId;
     const driverName = req.session.user.name;
+    const licensePlate1 = req.session.user.licensePlate;
 
     try {
         const selectedOrder = await Order.findOne({ _id: orderId });
@@ -427,11 +432,11 @@ app.post("/deliver/:orderId", ensureLogin, async (req, res) => {
         }
 
         // Check if the order is already assigned to another driver
-        if (selectedOrder.assignedTo && selectedOrder.assignedTo !== driverName) {
+        if (selectedOrder.assignedTo && selectedOrder.assignedTo !== licensePlate1) {
             return res.status(403).send("This order is already assigned to another driver.");
         }
          // Update the assignedTo field to the logged-in driver
-         selectedOrder.assignedTo = driverName;
+         selectedOrder.assignedTo = licensePlate1;
 
         // Update the status to "IN TRANSIT"
         selectedOrder.status = "IN TRANSIT";
@@ -458,7 +463,7 @@ app.post("/complete/:orderId", ensureLogin, async (req, res) => {
         }
 
         // Check if the order is assigned to the currently logged-in driver
-        if (selectedOrder.assignedTo !== req.session.user.name) {
+        if (selectedOrder.assignedTo !== req.session.user.licensePlate) {
             return res.status(403).send("You are not authorized to complete this order.");
         }
 

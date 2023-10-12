@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Deliveries</title>
+
 </head>
 
 <body>
@@ -24,12 +25,7 @@
                             <p>Customer: {{ this.customerName }}</p>
                             <p>Delivery Address: {{ this.deliveryAddress }}</p>
                             <p>Status: {{ this.status }}</p>
-                            <p>Items Ordered: 
-                                {{#each this.itemsOrdered}}
-                                    {{this.name}} (Quantity: {{this.quantity}}, Price: {{this.price}})
-                                    {{#unless @last}}, {{/unless}}
-                                {{/each}}
-                            </p>
+
                             <p>Assigned To: {{ this.assignedTo }}</p>
                             <form method="POST" action="/deliver/{{ this._id }}">
                                 <button type="submit">Start Delivery</button>
@@ -44,7 +40,6 @@
     </main>
 
     <footer>
-        <!-- Footer content goes here -->
     </footer>
 </body>
 

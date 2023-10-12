@@ -5,6 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery Fulfillment</title>
+    <style>
+        form
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        button
+        {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,6 +26,8 @@
     </header>
 
     <main>
+        <h2>Driver Name: {{ driverName }}</h2>
+        <h2>Driver License Plate: {{ licensePlate2 }}</h2>
         {{#if orders}}
             {{#each orders}}
                 {{#if this.assignedTo}} <!-- Only display assigned orders -->
