@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Login</title>
+    <style>
+        form
+        {
+            display:flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,7 +36,6 @@
             <p style="color: red;">Login failed. {{errorMsg}} </p>
             {{/if}}
             <p>Don't have an account? <a href="/register">Register here</a></p>
-            <p>HOME <a href="/">HOME</a></p>
         </section>
     </main>
 

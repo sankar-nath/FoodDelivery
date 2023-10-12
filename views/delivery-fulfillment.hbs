@@ -14,20 +14,26 @@
     </header>
 
     <main>
-        {{#each orders}}
-        <section>
-            <h2>Delivery Fulfillment for Order #{{ this.id }}</h2>
-            <p>Customer: {{ this.customerName }}</p>
-            <p>Delivery Address: {{ this.deliveryAddress }}</p>
-            <p>Status: {{ this.status }}</p>
+        {{#if orders}}
+            {{#each orders}}
+                {{#if this.assignedTo}} <!-- Only display assigned orders -->
+                    <section>
+                        <h2>Delivery Fulfillment for Order #{{ this._id }}</h2>
+                        <p>Customer: {{ this.customerName }}</p>
+                        <p>Delivery Address: {{ this.deliveryAddress }}</p>
+                        <p>Status: {{ this.status }}</p>
 
-            <form method="POST" action="/complete/{{ this.id }}">
-                <label for="photo">Take a photo as proof of delivery:</label>
-                <input type="file" id="photo" name="photo" accept="image/*" required>
-                <button type="submit">Mark as Delivered</button>
-            </form>
-        </section>
-        {{/each}}
+                        <form method="POST" action="/complete/{{ this._id }}">
+                            <label for="photo">Take a photo as proof of delivery:</label>
+                            <input type="file" id="photo" name="photo" accept="image/*" required>
+                            <button type="submit">Mark as Delivered</button>
+                        </form>
+                    </section>
+                {{/if}}
+            {{/each}}
+        {{else}}
+            <p>No orders available.</p>
+        {{/if}}
     </main>
 
     <footer>

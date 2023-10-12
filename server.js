@@ -298,6 +298,7 @@ app.post("/login", async (req, res) => {
 app.get("/logout", (req, res) => {
     // Clear the session or cookie as needed
     // Redirect to the login page or home page
+    req.session.destroy()
     res.redirect("/login");
 });
 
@@ -401,7 +402,7 @@ app.get("/deliverylist", ensureLogin, async (req, res) => {
     try {
         // Fetch orders assigned to the currently logged-in driver
         const driverName = req.session.user.name;
-        const assignedOrders = await Order.find({ assignedTo: driverName });
+        const assignedOrders = await Order.find({ assignedTo: driverName }).lean().exec();
 
         res.render("delivery-fulfillment", {
             layout: "main-layout",
@@ -445,6 +446,37 @@ app.post("/deliver/:orderId", ensureLogin, async (req, res) => {
         res.status(500).send("Error updating order status");
     }
 })
+
+app.post("/complete/:orderId", ensureLogin, async (req, res) => {
+    const orderId = req.params.orderId;
+
+    try {
+        const selectedOrder = await Order.findOne({ _id: orderId });
+
+        if (!selectedOrder) {
+            return res.status(404).send("Order not found");
+        }
+
+        // Check if the order is assigned to the currently logged-in driver
+        if (selectedOrder.assignedTo !== req.session.user.name) {
+            return res.status(403).send("You are not authorized to complete this order.");
+        }
+
+        // Update the status to "DELIVERED"
+        selectedOrder.status = "DELIVERED";
+
+        selectedOrder.assignedTo = "";
+
+        // Save the updated order in the database
+        await selectedOrder.save();
+
+        // You can also redirect to a confirmation page if needed
+        res.redirect("/deliverylist");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error marking the order as delivered");
+    }
+});
 
 const onHTTPStart = () => {
     console.log("Server is live!")

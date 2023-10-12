@@ -9,12 +9,12 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #ffff92;
+            background-color: #f7f7f7; /* Light gray background */
         }
 
         header {
-            background-color: #1db954;
-            color: white;
+            background-color: #1db954; /* Green header */
+            color: #fff; /* White text */
             padding: 20px;
             text-align: center;
         }
@@ -34,7 +34,11 @@
 
         nav a {
             text-decoration: none;
-            color: #fff;
+            color: #fff; /* White links */
+        }
+
+        nav a:hover {
+            text-decoration: underline; /* Underline on hover */
         }
 
         footer {
@@ -47,10 +51,29 @@
         h1 {
             text-transform: uppercase;
         }
+
+        /* Driver Dashboard Styling */
+        .dashboard-container {
+            background-color: #fff; /* White container background */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .dashboard-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-content {
+            padding: 20px;
+        }
+
     </style>
 </head>
 <body>
-     <header>
+    <header>
         <h1>Welcome to the Driver Dashboard</h1>
         <nav>
             <ul>
@@ -58,11 +81,17 @@
                 <li><a href="/orderlist">Order List</a></li>
                 <li><a href="/login">Login</a></li>
                 <li><a href="/deliverylist">Delivery List</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         </nav>
     </header>
 
-    {{{body}}}
+    <div class="dashboard-container">
+        <div class="dashboard-content">
+            <h2 class="dashboard-title">Dashboard</h2>
+            {{{body}}}
+        </div>
+    </div>
 
     <footer>
         <p>Made for MADS class</p>
