@@ -16,18 +16,29 @@
     <main>
         <section>
             <h2>List of Open Deliveries</h2>
-            <ul>
-                {{#each orders}}
-                <li>
-                    <h3>Order #{{ this.id }}</h3>
-                    <p>Customer: {{ this.customerName }}</p>
-                    <p>Delivery Address: {{ this.deliveryAddress }}</p>
-                    <p>Status: {{ this.status }}</p>
-                    <form method="POST" action="/deliver/{{ this.id }}">
-                        <button type="submit">Start Delivery</button>
-                    </form>
-                </li>
-                {{/each}}
+             <ul>
+                {{#if orders}}
+                    {{#each orders}}
+                        <li>
+                            <h3>Order #{{ this._id }}</h3>
+                            <p>Customer: {{ this.customerName }}</p>
+                            <p>Delivery Address: {{ this.deliveryAddress }}</p>
+                            <p>Status: {{ this.status }}</p>
+                            <p>Items Ordered: 
+                                {{#each this.itemsOrdered}}
+                                    {{this.name}} (Quantity: {{this.quantity}}, Price: {{this.price}})
+                                    {{#unless @last}}, {{/unless}}
+                                {{/each}}
+                            </p>
+                            <p>Assigned To: {{ this.assignedTo }}</p>
+                            <form method="POST" action="/deliver/{{ this._id }}">
+                                <button type="submit">Start Delivery</button>
+                            </form>
+                        </li>
+                    {{/each}}
+                {{else}}
+                    <p>No orders available.</p>
+                {{/if}}
             </ul>
         </section>
     </main>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Layout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffff92;
+        }
+
+        header {
+            background-color: #1db954;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 20px;
+            list-style-type: none;
+            text-align: justify;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            font-weight: bold;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        footer {
+            background-color: #1db954;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        h1 {
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+     <header>
+        <h1>Welcome to the Driver Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/orderlist">Order List</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/deliverylist">Delivery List</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {{{body}}}
+
+    <footer>
+        <p>Made for MADS class</p>
+    </footer>
+</body>
+</html>
