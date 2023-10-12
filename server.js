@@ -26,11 +26,7 @@ app.use(session({
     //cookie needs to be set to false since we need to use HTTP instead of HTTPS
     cookie: { secure: false }
 }))
-
-
-
 //lets create a new middleware that ensures that user is logged in before they can access dashboard or other page
-
 const ensureLogin = (req, res, next) => {
     if (req.session.isLoggedIn !== undefined &&
         req.session.isLoggedIn &&
@@ -51,16 +47,7 @@ const mongoose = require("mongoose")
 
 const CONNECTION_STRING = "mongodb+srv://betito:bedu1234@cluster0.w9cshvn.mongodb.net/jalapeno?retryWrites=true&w=majority"
 
-// mongoose.connect(CONNECTION_STRING);
-
-// const db = mongoose.connection;
-// db.on("error", console.error.bind(console, "Error connecting to database: "));
-// db.once("open", () => { console.log("Mongo DB connected successfully."); });
-// console.log(`here after db`)
-
-//mongoose
-// const MONGODB_URI = process.env.MONGODB_URI;
-
+//code from Hesus
 mongoose
     .connect(CONNECTION_STRING, {
         useNewUrlParser: true,
@@ -73,7 +60,7 @@ mongoose
         console.error("Error connecting to MongoDB: " + err.message);
     });
 
-
+//Schema 
 const orderSchema = new mongoose.Schema(
     {
         customerName: {
@@ -145,6 +132,8 @@ const driverSchema = new mongoose.Schema({
     },
   });
 
+
+//Models from Hesus
 const Order = mongoose.model("Order", orderSchema);
 const Driver = mongoose.model("Driver", driverSchema);
 
@@ -217,7 +206,6 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
     console.log(`here at /login`)
     // Accessing a driver's information
-    console.log(driversCollection[0].fullName); // Outputs: "John Doe"
     res.render("driver-login",
         {
             layout: "main-layout"
@@ -288,17 +276,11 @@ app.post("/login", async (req, res) => {
     if (!flag) {
         return res.render("driver-login", { errorMsg: "Please fill in all fields", layout: "main-layout" })
     }
-
-
-
 })
-
-
 
 // Handle logout, you can clear the session or cookie here
 app.get("/logout", (req, res) => {
-    // Clear the session or cookie as needed
-    // Redirect to the login page or home page
+    // Clear the session
     req.session.destroy()
     res.redirect("/login");
 });
